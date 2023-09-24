@@ -1,0 +1,77 @@
+@startuml
+title Desafio de Projeto DIO: Orientação a Objetos e UML: Diagramação de Classes do iPhone
+
+skinparam classAttributeIconSize 0
+/' Para abrir o arquivo, acesse o link:
+ https://www.planttext.com/
+ '/
+
+class Midia {
+  nome: String
+  caminho: String
+}
+
+
+class Contato {
+  nome: String
+  numero: String
+}
+
+class Pagina{
+  url: String
+  conteudoHtml: String
+}
+
+interface "Reprodutor de Mídia" as MediaPlayer {
+  -Midia[] midia
+  +selecionarMidia(caminho: String): Midia
+  +reproduzir(caminho: String): Boolean
+}
+
+interface "Aparelho Telefônico" as AparelhoTelefonico {
+  -Contato[] contatos
+  -redeMovelDisponivel(): Boolean
+  +ligar(numeroTelefone: int): void
+  +atender(numeroTelefone: int): void
+  +iniciarCorreioVoz(numeroTelefone: int): void
+}
+
+interface "Navegador de Internet" as InternetBrowser {
+  -Pagina[] paginas
+  -conexaoComInternet(): Boolean
+  +acessarPagina(url: String): Pagina
+  +adicionarNovaAba(): void
+  +atualizarPagina(url: String): Pagina
+}
+
+entity "iPod" as iPod {}
+entity "MP4 SonyWalkman" as SonyWalkman {}
+
+entity "Moto Q" as MotoQ {}
+entity "BlackBerry" as BlackBerry {}
+entity "Palm Treo" as PalmTreo {}
+entity "Nokia E62" as NokiaE62 {}
+
+
+entity "Safari Web Browser" as Safari {}
+
+entity "IPhone" as IPhone {}
+
+IPhone --> AparelhoTelefonico
+IPhone --> InternetBrowser
+IPhone --> MediaPlayer
+
+AparelhoTelefonico <-- MotoQ
+AparelhoTelefonico <-- BlackBerry
+AparelhoTelefonico <-- PalmTreo
+AparelhoTelefonico <-- NokiaE62
+
+AparelhoTelefonico --o Contato
+
+MediaPlayer <-- iPod
+MediaPlayer <-- SonyWalkman
+MediaPlayer --o Midia
+
+InternetBrowser <-- Safari
+InternetBrowser --o Pagina
+@enduml
